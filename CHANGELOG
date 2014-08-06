@@ -1,0 +1,2 @@
+v1.1:   Changed PHP short open tags into full open tags to make sure ArrayDiffHtml works when short_open_tag = Off
+v1.0:   Initial version

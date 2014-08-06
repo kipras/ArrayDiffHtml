@@ -21,7 +21,7 @@
  * Requirements:
  *      PHP >= 5.3 (uses static:: keyword)
  *
- * @version 1.0
+ * @version 1.1
  */
 class ArrayDiffHtml
 {
@@ -119,7 +119,7 @@ class ArrayDiffHtml
                     <th><?php echo $opt['title1'] ?> array</th>
                     <?php if (empty($opt['noSecond'])): ?>
                         <th><?php echo $opt['title2'] ?> array</th>
-                    <? endif ?>
+                    <?php endif ?>
                 </tr>
 
                 <?php echo static::getArrayDiffHtml($first, $second, $strictEquality, $opt, $_diffIndex) ?>
@@ -298,7 +298,7 @@ class ArrayDiffHtml
                 <?php if (!empty($row['equalButTypeDifferent'])): ?>__arrayDiffHtmlRowEqualButTypeDifferent<?php endif ?>">
 
             <td>
-                <?
+                <?php
                 if ($hasInnerRows):
                     if ($collapseInnerRows): ?>
                         <div class="__arrayDiffHtmlPlus" id="__arrayDiffHtmlPlusMinus_<?php echo $diffIndex?>_<?php echo $thisExpandableIndex?>"><span>+</span></div>
@@ -318,7 +318,7 @@ class ArrayDiffHtml
                     <?php var_dump($row['aVal']) ?>
                 </td>
             <?php else: ?>
-                <td>Array(<? echo $row['aCount'] ?>)</td>
+                <td>Array(<?php echo $row['aCount'] ?>)</td>
             <?php endif ?>
 
             <?php if (empty($opt['noSecond'])): ?>
@@ -329,7 +329,7 @@ class ArrayDiffHtml
                         <?php var_dump($row['bVal']) ?>
                     </td>
                 <?php else: ?>
-                    <td>Array(<? echo $row['bCount'] ?>)</td>
+                    <td>Array(<?php echo $row['bCount'] ?>)</td>
                 <?php endif ?>
             <?php endif ?>
         </tr>
