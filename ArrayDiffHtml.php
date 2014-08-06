@@ -21,7 +21,7 @@
  * Requirements:
  *      PHP >= 5.3 (uses static:: keyword)
  *
- * @version 1.1
+ * @version 1.2
  */
 class ArrayDiffHtml
 {
@@ -240,13 +240,17 @@ class ArrayDiffHtml
     }
 
     /**
-     * Given an array - recursively converts its properties that are not arrays into empty arrays.
+     * Recursively converts objects into arrays.
      * @param mixed $item
      * @return array
      */
     protected static function toArray($item)
     {
         $arr = is_array($item) ? $item : [];
+
+        if (is_object($item) AND method_exists($item, '_toArray')) {
+            $arr = $item->_toArray();
+        }
 
         foreach ($arr as $k => $v) {
             if (is_object($v)) {
