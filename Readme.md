@@ -6,6 +6,12 @@ providing buttons to expand/collapse each level.
 Example screenshot:  
 ![ArrayDiffHtml screenshot](http://www.kipras.com/kipras_libs/ArrayDiffHtml.png)
 
+Any objects found along the way are converted to arrays, in one of these ways (they are tried in this order):
+
+- If a global function `toArray()` exists - that function is called and the result of it is used for comparison
+- If the object has a method `_toArray()` - that method is called and the result of it is used for comparison
+- Otherwise `get_object_vars()` is called to retrieve data from the object
+
 ## Usage
 
 - **ArrayDiffHtml::diff($first, $second, [$strictEquality], [$opt])**

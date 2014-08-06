@@ -21,7 +21,7 @@
  * Requirements:
  *      PHP >= 5.3 (uses static:: keyword)
  *
- * @version 1.2
+ * @version 1.3
  */
 class ArrayDiffHtml
 {
@@ -248,12 +248,18 @@ class ArrayDiffHtml
     {
         $arr = is_array($item) ? $item : [];
 
-        if (is_object($item) AND method_exists($item, '_toArray')) {
-            $arr = $item->_toArray();
+        if (function_exists('toArray')) {
+            $arr = toArray($item);
+        } else if (is_object($item)) {
+            if (method_exists($item, '_toArray')) {
+                $arr = $item->_toArray();
+            } else {
+                $arr = get_object_vars($item);
+            }
         }
 
         foreach ($arr as $k => $v) {
-            if (is_object($v)) {
+            if (is_object($v) OR is_array($v)) {
                 $arr[$k] = static::toArray($v);
             }
         }
@@ -721,3 +727,53 @@ $result = Array(
 $expected = Array();
 echo ArrayDiffHtml::diff($result, $expected, true);
 echo "<br />";
+
+$testIndex++;
+echo "{$testIndex}. Comparison against an Object. Should return same result as the initial test (1.)";
+$result = new StdClass();
+$result->a = 'b';
+$result->c = new StdClass();
+$result->c->foo1 = 'bar2';
+$result->c->foo2 = Array('bar2', 'bar3');
+$expected = Array(
+    'a' => Array(
+        'bla1',
+        'bla2',
+        'bla3' => Array(),
+        'bla4' => Array(
+            'test',
+        ),
+    ),
+    'c' => Array(
+        'foo1' => 'bar2',
+        'foo2' => Array(
+            'bar3',
+        ),
+    ),
+    'd',
+    'e' => Array(),
+);
+echo ArrayDiffHtml::diff($result, $expected, true);
+echo "<br />";
+
+$testIndex++;
+echo "{$testIndex}. Comparison against an Object. Checks to make sure Object within array within Object works correctly. Should identify arrays as identical.";
+$result = new StdClass();
+$result->a = 'b';
+$result->c = Array(
+    'd' => 1,
+    'e' => new StdClass(),
+);
+$result->c['e']->f = 'bar';
+$expected = Array(
+    'a' =>'b',
+    'c' => Array(
+        'd' => 1,
+        'e' => Array(
+            'f' => 'bar',
+        ),
+    ),
+);
+echo ArrayDiffHtml::diff($result, $expected, true);
+echo "<br />";
+

@@ -1,3 +1,6 @@
+v1.3:   - If there is a toArray() function in the environment then this function is used for array conversion
+        - When an Object does not support _toArray() - we run get_object_vars() on it
+        - Added tests for Object comparison against arrays
 v1.2:   Modified ArrayDiffHtml to use _toArray() on objects that support it
 v1.1:   Changed PHP short open tags into full open tags to make sure ArrayDiffHtml works when short_open_tag = Off
 v1.0:   Initial version
