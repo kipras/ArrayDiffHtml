@@ -1,0 +1,12 @@
+{
+    "name": "kipras/array-diff-html",
+    "description": "PHP class for pretty-printing the difference between two arrays/objects",
+    "homepage": "http://github.com/kipras/ArrayDiffHtml",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["ArrayDiffHtml.php"]
+    }
+}
